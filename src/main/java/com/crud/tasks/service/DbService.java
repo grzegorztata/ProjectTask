@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class DbService {
@@ -14,5 +17,9 @@ public class DbService {
 
     public List<Task> getAllTasks() {
         return repository.findAll();
+    }
+
+    public Optional<Task> getTaskById(final Long id) {
+        return repository.findById(id);
     }
 }
