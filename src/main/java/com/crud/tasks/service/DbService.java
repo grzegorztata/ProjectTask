@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Service
 public class DbService {
     @Autowired
     private TaskRepository repository;
 
-    public List<Task> getAllTasks() {
+    public List<Task> getAllTasks(){
         return repository.findAll();
     }
-
-    public List<Task> getTaskById() {
+    public Optional<Task> getTask(final Long id){
         return repository.findById(id);
     }
-
-    public Task saveTask(final Task task) {
+    public Task saveTask(final Task task){
         return repository.save(task);
     }
+    public void deleteTask(final Long id) {
+        repository.delete(id);
+    }
+
 }
