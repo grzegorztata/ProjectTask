@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/task")
 public class TaskController {
+    private static final Long id = 1L;
+
     @Autowired
     private DbService service;
     @Autowired
@@ -29,9 +30,9 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(service.getAllTasks());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTask/{id}")
-    public TaskDto getTask(Long taskId, @PathVariable("id") String id) {
-        return new TaskDto(1L, "test title", "test_content");
+    @RequestMapping(method = RequestMethod.GET,value = "getTaskById/{id}")
+    public TaskDto getTaskById(@PathVariable("id") String id) {
+        return new TaskDto(2L, "test title", "Test content");
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
