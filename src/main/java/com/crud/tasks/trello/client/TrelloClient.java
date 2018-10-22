@@ -16,12 +16,13 @@ import java.util.Optional;
 public class TrelloClient {
     @Value("${trello.api.endpoint.prod}")
     private String trelloApiEndpoint;
-    @Value("98a52f43bc2e7ce749d5bca1dfdbcd90")
+    @Value("${trello.app.key}")
     private String trelloAppKey;
-    @Value("f44f70eb8a3ba2e99843230658ec7fc402ac6755c3d78058c7239623685f642b")
-    private String trelloToken;
+    @Value("${trello.app.token}")
+    private String trelloAppToken;
     @Value("${trello.app.username}")
     private String trelloUsername;
+
     @Autowired
     private RestTemplate restTemplate;
     public List<TrelloBoardDto> getTrelloBoards() {
@@ -29,9 +30,9 @@ public class TrelloClient {
         return Arrays.asList(Optional.ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
     }
     private URI buildUrl() {
-        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/" + trelloUsername + "/boards")
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/grzegorzgretzky/boards")
                 .queryParam("key", trelloAppKey)
-                .queryParam("token", trelloToken)
+                .queryParam("token", trelloAppToken)
                 .queryParam("fields", "name,id").build().encode().toUri();
         return url;
     }
