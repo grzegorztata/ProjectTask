@@ -71,7 +71,8 @@ public class TrelloClientTest {
         CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
                 "1",
                 "Test task",
-                "http://test.com"
+                "http://test.com",
+                null // podpowiedź z komunikatora, żeby p\oki co dodać nulla
         );
 
         when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
@@ -83,5 +84,19 @@ public class TrelloClientTest {
         assertEquals("1", newCard.getId());
         assertEquals("Test task", newCard.getName());
         assertEquals("http://test.com", newCard.getShortUrl());
+    }
+
+    @Test
+    public void shouldReturnEmptyList() throws URISyntaxException {
+
+        //given
+        URI url = new URI("http://test.com/members/" + trelloConfig.getTrelloUsername() + "/boards?key=test&token=test&fields=name,id&lists=all"); //??? onko tärkeä??
+        when(restTemplate.getForObject(url, TrelloBoardDto[].class)).thenReturn(null);
+
+        //when
+        List<TrelloBoardDto> boards = trelloClient.getTrelloBoards();
+
+        //then
+        assertEquals(0, boards.size());
     }
 }
