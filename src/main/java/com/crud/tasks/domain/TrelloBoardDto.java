@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrelloBoardDto {
@@ -19,4 +18,5 @@ public class TrelloBoardDto {
     private String name;
     @JsonProperty("lists")
     private List<TrelloListDto> lists;
+
 }
