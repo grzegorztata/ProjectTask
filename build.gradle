@@ -30,11 +30,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-validation')
 	compile('org.springframework.boot:spring-boot-starter-web')
  	runtime('mysql:mysql-connector-java')
-	compile('org.postgresql:postgresql')
+//	compile('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compileOnly('org.projectlombok:lombok:1.18.2')
  	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	compile('org.springframework.boot:spring-boot-starter-mail:1.5.9.RELEASE')
+	compile('com.google.code.gson:gson:2.8.2')
 
 // SWAGGER
 	compile('io.springfox:springfox-swagger2:2.7.0') //Swagger DOCUMENT API
