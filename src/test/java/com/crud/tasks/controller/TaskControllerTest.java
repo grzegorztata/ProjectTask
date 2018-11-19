@@ -71,6 +71,26 @@ public class TaskControllerTest {
     }
 /*
     @Test
+    public void shouldCreateTask() throws Exception {
+        //Given
+        Task task = new Task(1L, "Test title", "Test content");
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
+
+        when(service.saveTask(task)).thenReturn(task);
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
+
+        //When&Then
+        mockMvc.perform(post("/v1/task/").contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk());
+    }
+    */
+/*
+    @Test
     public void getTask() throws Exception {
         //Given
         List<TaskDto> taskDtos = new ArrayList<>();
@@ -92,4 +112,5 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$.content", is("content1")));
     }
 */
+
 }
