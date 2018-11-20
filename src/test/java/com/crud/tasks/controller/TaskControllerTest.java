@@ -69,29 +69,10 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$[0].title", is("title")))
                 .andExpect(jsonPath("$[0].content", is("content")));
     }
-/*
+
+
     @Test
-    public void shouldCreateTask() throws Exception {
-        //Given
-        Task task = new Task(1L, "Test title", "Test content");
-        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
-
-        when(service.saveTask(task)).thenReturn(task);
-        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
-
-        Gson gson = new Gson();
-        String jsonContent = gson.toJson(taskDto);
-
-        //When&Then
-        mockMvc.perform(post("/v1/task/").contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
-                .andExpect(status().isOk());
-    }
-    */
-/*
-    @Test
-    public void getTask() throws Exception {
+    public void shouldGetTask() throws Exception {
         //Given
         List<TaskDto> taskDtos = new ArrayList<>();
         TaskDto taskDto = new TaskDto(1L, "title1", "content1");
@@ -104,13 +85,80 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
         when(service.getTask(task.getId())).thenReturn(Optional.ofNullable(task)); //using Optional
 
-        //When Then  Error message = Required Long parameter 'taskId' is not present
-        mockMvc.perform(get("/v1/task/getTask/1", 1L).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(404))
+        mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("title1")))
                 .andExpect(jsonPath("$.content", is("content1")));
     }
-*/
+
+    @Test
+    public void shouldCreateTask() throws Exception {
+        //Given
+        List<TaskDto> taskDtos = new ArrayList<>();
+        TaskDto taskDto = new TaskDto(1L, "title2", "contetnt2");
+        taskDtos.add(taskDto);
+
+        List<Task> tasks = new ArrayList<>();
+        Task task = new Task(1L, "title2", "content2");
+        tasks.add(task);
+
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
+        when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
+        when(service.saveTask(task)).thenReturn(task);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
+
+        //When Then
+        mockMvc.perform(post("/v1/task/createTask?taskId=1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().is(200));
+    }
+
+    @Test
+    public void shouldUpdateTask() throws Exception {
+        //Given
+        List<TaskDto> taskDtos = new ArrayList<>();
+        TaskDto taskDto = new TaskDto(1L, "title3", "contetnt3");
+        taskDtos.add(taskDto);
+
+        List<Task> tasks = new ArrayList<>();
+        Task task = new Task(1L, "title3", "content3");
+        tasks.add(task);
+
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
+        when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
+        when(service.saveTask(task)).thenReturn(task);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
+
+        //When Then
+        mockMvc.perform(put("/v1/task/updateTask?taskId=1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().is(200));
+
+
+    }
+
+    @Test
+    public void shouldDeleteTask() throws Exception {
+        //Given
+        List<Task> tasks = new ArrayList<>();
+        Task task = new Task(1L, "title4", "content4");
+        tasks.add(task);
+
+        when(service.getTask(task.getId())).thenReturn(Optional.ofNullable(task));
+
+        //When Then
+        mockMvc.perform(delete("/v1/task/deleteTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 
 }

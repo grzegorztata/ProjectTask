@@ -83,7 +83,8 @@ public class TrelloControllerTest {
                 "top",
                 "1");
 
-        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("323",
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
+                "323",
                 "Test",
                 "http://test.com",
                 null); //TrelloBadgesDto
