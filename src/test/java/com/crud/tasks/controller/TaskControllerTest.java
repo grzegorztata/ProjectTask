@@ -4,7 +4,6 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
-import com.crud.tasks.trello.facade.TrelloFacade;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,9 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyList;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,32 +72,33 @@ public class TaskControllerTest {
     public void shouldGetTask() throws Exception {
         //Given
         List<TaskDto> taskDtos = new ArrayList<>();
-        TaskDto taskDto = new TaskDto(1L, "title1", "content1");
+        TaskDto taskDto = new TaskDto(1L, "title", "content");
         taskDtos.add(taskDto);
 
         List<Task> tasks = new ArrayList<>();
-        Task task = new Task(1L, "title1", "content1");
+        Task task = new Task(1L, "title", "content");
         tasks.add(task);
 
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
         when(service.getTask(task.getId())).thenReturn(Optional.ofNullable(task)); //using Optional
 
+        //when Ten
         mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.title", is("title1")))
-                .andExpect(jsonPath("$.content", is("content1")));
+                .andExpect(jsonPath("$.title", is("title")))
+                .andExpect(jsonPath("$.content", is("content")));
     }
 
     @Test
     public void shouldCreateTask() throws Exception {
         //Given
         List<TaskDto> taskDtos = new ArrayList<>();
-        TaskDto taskDto = new TaskDto(1L, "title2", "contetnt2");
+        TaskDto taskDto = new TaskDto(1L, "title", "contetnt");
         taskDtos.add(taskDto);
 
         List<Task> tasks = new ArrayList<>();
-        Task task = new Task(1L, "title2", "content2");
+        Task task = new Task(1L, "title", "content");
         tasks.add(task);
 
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
@@ -122,11 +120,11 @@ public class TaskControllerTest {
     public void shouldUpdateTask() throws Exception {
         //Given
         List<TaskDto> taskDtos = new ArrayList<>();
-        TaskDto taskDto = new TaskDto(1L, "title3", "contetnt3");
+        TaskDto taskDto = new TaskDto(1L, "title", "contetnt");
         taskDtos.add(taskDto);
 
         List<Task> tasks = new ArrayList<>();
-        Task task = new Task(1L, "title3", "content3");
+        Task task = new Task(1L, "title", "content");
         tasks.add(task);
 
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
@@ -150,7 +148,7 @@ public class TaskControllerTest {
     public void shouldDeleteTask() throws Exception {
         //Given
         List<Task> tasks = new ArrayList<>();
-        Task task = new Task(1L, "title4", "content4");
+        Task task = new Task(1L, "title", "content");
         tasks.add(task);
 
         when(service.getTask(task.getId())).thenReturn(Optional.ofNullable(task));
